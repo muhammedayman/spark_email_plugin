@@ -1,0 +1,232 @@
+
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD
+org.jivesoftware.spark
+Class ChatManager
+java.lang.Object
+  extended by org.jivesoftware.spark.ChatManager
+All Implemented Interfaces:
+org.jivesoftware.smackx.MessageEventNotificationListener
+public class ChatManager
+extends java.lang.Object
+implements org.jivesoftware.smackx.MessageEventNotificationListener
+Handles the Chat Management of each individual Workspace. The ChatManager is responsible for creation and removal of chat rooms, transcripts, and transfers and room invitations.
+
+
+
+
+Method Summary
+ void	activateChat(java.lang.String userJID, java.lang.String nickname)
+          Activate a chat room with the selected user.
+ void	addChatRoomListener(ChatRoomListener listener)
+          Used to listen for rooms opening, closing or being activated( already opened, but tabbed to )
+ void	addContactItemHandler(ContactItemHandler handler)
+           
+ void	addInvitationListener(RoomInvitationListener listener)
+           
+ void	addMessageFilter(MessageFilter filter)
+          Adds a new MessageFilter.
+ void	cancelledNotification(java.lang.String from, java.lang.String packetID)
+           
+ void	composingNotification(java.lang.String from, java.lang.String packetID)
+           
+ ChatRoom	createChatRoom(java.lang.String userJID, java.lang.String nickname, java.lang.String title)
+          Creates and/or opens a chat room with the specified user.
+ ChatRoom	createConferenceRoom(java.lang.String roomName, java.lang.String serviceName)
+          Creates a new public Conference Room.
+ void	deliveredNotification(java.lang.String from, java.lang.String packetID)
+           
+ void	displayedNotification(java.lang.String from, java.lang.String packetID)
+           
+ void	filterIncomingMessage(ChatRoom room, org.jivesoftware.smack.packet.Message message)
+           
+ void	filterOutgoingMessage(ChatRoom room, org.jivesoftware.smack.packet.Message message)
+           
+ boolean	fireContactItemDoubleClicked(ContactItem item)
+           
+ boolean	fireContactItemPresenceChanged(ContactItem item, org.jivesoftware.smack.packet.Presence presence)
+           
+ ChatContainer	getChatContainer()
+          Returns all ChatRooms currently active.
+ ChatRoom	getChatRoom(java.lang.String jid)
+          Returns the ChatRoom for the giving jid.
+ java.lang.String	getDefaultConferenceService()
+           
+ GroupChatRoom	getGroupChat(java.lang.String roomName)
+          Returns the MultiUserChat associated with the specified roomname.
+ javax.swing.Icon	getIconForContactHandler(java.lang.String jid)
+           
+static ChatManager	getInstance()
+          Returns the singleton instance of ChatManager, creating it if necessary.
+ java.util.Collection	getInvitationListeners()
+           
+ java.util.Collection	getMessageFilters()
+          Returns a Collection of MessageFilters registered to Spark.
+ javax.swing.Icon	getTabIconForContactHandler(org.jivesoftware.smack.packet.Presence presence)
+           
+ void	offlineNotification(java.lang.String from, java.lang.String packetID)
+           
+ void	removeChat(ChatRoom chatRoom)
+          Removes the personal 1 to 1 chat from the ChatFrame.
+ void	removeChatRoomListener(ChatRoomListener listener)
+          Simplace facade for chatroom.
+ void	removeContactItemHandler(ContactItemHandler handler)
+           
+ void	removeInvitationListener(RoomInvitationListener listener)
+           
+ void	removeMessageFilter(MessageFilter filter)
+          Removes a MessageFilter.
+ 
+Methods inherited from class java.lang.Object
+clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait
+ 
+
+Method Detail
+getInstance
+public static ChatManager getInstance()
+Returns the singleton instance of ChatManager, creating it if necessary.
+
+
+Returns:
+the singleton instance of ChatManager
+addChatRoomListener
+public void addChatRoomListener(ChatRoomListener listener)
+Used to listen for rooms opening, closing or being activated( already opened, but tabbed to )
+
+Parameters:
+listener - the ChatRoomListener to add
+removeChatRoomListener
+public void removeChatRoomListener(ChatRoomListener listener)
+Simplace facade for chatroom. Removes a listener
+
+Parameters:
+listener - the ChatRoomListener to remove
+removeChat
+public void removeChat(ChatRoom chatRoom)
+Removes the personal 1 to 1 chat from the ChatFrame.
+
+Parameters:
+chatRoom - the ChatRoom to remove.
+getChatContainer
+public ChatContainer getChatContainer()
+Returns all ChatRooms currently active.
+
+Returns:
+all ChatRooms.
+getGroupChat
+public GroupChatRoom getGroupChat(java.lang.String roomName)
+                           throws ChatNotFoundException
+Returns the MultiUserChat associated with the specified roomname.
+
+Parameters:
+roomName - the name of the chat room.
+Returns:
+the MultiUserChat found for that room.
+Throws:
+ChatNotFoundException
+createChatRoom
+public ChatRoom createChatRoom(java.lang.String userJID,
+                               java.lang.String nickname,
+                               java.lang.String title)
+Creates and/or opens a chat room with the specified user.
+
+Parameters:
+userJID - the jid of the user to chat with.
+nickname - the nickname to use for the user.
+getChatRoom
+public ChatRoom getChatRoom(java.lang.String jid)
+Returns the ChatRoom for the giving jid. If the ChatRoom is not found, a new ChatRoom will be created.
+
+Parameters:
+jid - the jid of the user to chat with.
+Returns:
+the ChatRoom.
+createConferenceRoom
+public ChatRoom createConferenceRoom(java.lang.String roomName,
+                                     java.lang.String serviceName)
+Creates a new public Conference Room.
+
+Parameters:
+roomName - the name of the room.
+serviceName - the service name to use (ex.conference.jivesoftware.com)
+Returns:
+the new ChatRoom created. If an error occured, null will be returned.
+activateChat
+public void activateChat(java.lang.String userJID,
+                         java.lang.String nickname)
+Activate a chat room with the selected user.
+
+addMessageFilter
+public void addMessageFilter(MessageFilter filter)
+Adds a new MessageFilter.
+
+Parameters:
+filter - the MessageFilter.
+removeMessageFilter
+public void removeMessageFilter(MessageFilter filter)
+Removes a MessageFilter.
+
+Parameters:
+filter - the MessageFilter.
+getMessageFilters
+public java.util.Collection getMessageFilters()
+Returns a Collection of MessageFilters registered to Spark.
+
+Returns:
+the Collection of MessageFilters.
+filterIncomingMessage
+public void filterIncomingMessage(ChatRoom room,
+                                  org.jivesoftware.smack.packet.Message message)
+filterOutgoingMessage
+public void filterOutgoingMessage(ChatRoom room,
+                                  org.jivesoftware.smack.packet.Message message)
+addInvitationListener
+public void addInvitationListener(RoomInvitationListener listener)
+removeInvitationListener
+public void removeInvitationListener(RoomInvitationListener listener)
+getInvitationListeners
+public java.util.Collection getInvitationListeners()
+getDefaultConferenceService
+public java.lang.String getDefaultConferenceService()
+addContactItemHandler
+public void addContactItemHandler(ContactItemHandler handler)
+removeContactItemHandler
+public void removeContactItemHandler(ContactItemHandler handler)
+fireContactItemPresenceChanged
+public boolean fireContactItemPresenceChanged(ContactItem item,
+                                              org.jivesoftware.smack.packet.Presence presence)
+fireContactItemDoubleClicked
+public boolean fireContactItemDoubleClicked(ContactItem item)
+getIconForContactHandler
+public javax.swing.Icon getIconForContactHandler(java.lang.String jid)
+getTabIconForContactHandler
+public javax.swing.Icon getTabIconForContactHandler(org.jivesoftware.smack.packet.Presence presence)
+deliveredNotification
+public void deliveredNotification(java.lang.String from,
+                                  java.lang.String packetID)
+Specified by:
+deliveredNotification in interface org.jivesoftware.smackx.MessageEventNotificationListener
+displayedNotification
+public void displayedNotification(java.lang.String from,
+                                  java.lang.String packetID)
+Specified by:
+displayedNotification in interface org.jivesoftware.smackx.MessageEventNotificationListener
+composingNotification
+public void composingNotification(java.lang.String from,
+                                  java.lang.String packetID)
+Specified by:
+composingNotification in interface org.jivesoftware.smackx.MessageEventNotificationListener
+offlineNotification
+public void offlineNotification(java.lang.String from,
+                                java.lang.String packetID)
+Specified by:
+offlineNotification in interface org.jivesoftware.smackx.MessageEventNotificationListener
+cancelledNotification
+public void cancelledNotification(java.lang.String from,
+                                  java.lang.String packetID)
+Specified by:
+cancelledNotification in interface org.jivesoftware.smackx.MessageEventNotificationListener
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD

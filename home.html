@@ -1,0 +1,766 @@
+
+Spark
+What Are Sparkplugs?
+Sparkplugs dynamically extend the features of the Spark instant messaging client. Use Sparkplugs to customize Spark for your business or organization or to add an innovative twist to instant messaging. The extensive plugin API allows for complete client flexibility but is still simple and (we hope!) fun to use.
+
+This guide provides a high level overview of the Sparkplug API and examples of several common client customizations. Or, jump directly into the Javadocs.
+
+Once I Build It, Then What?
+After you've built your amazingly cool Sparkplug, it's easy to rollout to your users. Just have them drop it in the plugins directory of their Spark installation. If your Sparkplug is generally useful, we hope you'll share it with the whole Spark community! To make your Sparkplug available via the public repository at jivesoftware.org, submit it to plugins@jivesoftware.org.
+
+Contents
+This document contains the following information:
+Overview of the Spark Client
+Overview of the Sparkplug API
+Sparkplug Javadocs
+Structure Of A Plugin
+Getting started writing your first plugin
+Spark Examples and How-To's. Many examples of the most commonly asked questions when developing with Spark.
+Overview of the Spark Client
+The Spark client is designed with the idea that most users find the different aspects of a chat client familiar and easy to use. All components you see below are either accessible from the Workspace or ChatRoom object and can be manipulated based on your needs.
+
+
+
+Overview of the Spark API
+The Spark API provides a framework for adding extensions on top of the protocol and/or UI of the Spark client. For example, you could write your own message filter or add a button to a chat room and send files using the File Transfer API. The Spark API has the following characteristics:
+Several event listeners to either intercept, be informed of, or execute custom code in response to a particular IM event.
+Thorough tie-ins to the UI to allow for customization from simple icon changes, to adding buttons, to adding your own menu items.
+Ability to add your own XMPP functions using the SMACK API.
+Managers - Managers allow for better (lazy) loading of particular areas within the Spark client as well as providing access points to the system. Some of the more relevant managers are:
+SparkManager -- Acts as the central manager for all of Spark. You use this manager to get instances of ChatManager, SessionManager, SoundManager, and UserManager.
+ChatManager -- Handles registration of most chat listeners and filters, as well as creation and retrieval of chat rooms. It is also used to retrieve the UI of the ChatFrame.
+SessionManager -- Contains the information about the current session, such as the server connected to, the handling of connection errors and notification of personal presence changes.
+SoundManager -- Used to play sounds.
+Event Handlers -- Spark contains numerous listeners and handlers to allow more pluggability into the Spark client. Some of the more common listeners and handlers are:
+ChatRoomListener (and ChatRoomListenerAdapter) -- Allows the plugin to listen for chat rooms being opened, closed and activated. You would generally use this to customize individual chat rooms.
+MessageListener -- Allows for notification when a message has been received or sent.
+ContactGroupListener -- Allows for notification of changes to a Contact Group.
+ContactListListener -- Allows for notification of changes to the Contact List.
+FileTransferListener -- Allows you to intercept File transfers.
+ContextMenuListener -- Allows for the addition or removal of actions or menu items to right-click (context menu) popups.
+PresenceListener -- Allows for notification when Spark presence changes.
+ContactItemHandler -- Allows the plugin to control the effects of presence changes within a ContactItem and the associated invoke call.
+Components -- Spark contains many Swing components that will regularly be used during the creation of your plugin. Some of the more commonly used components are :
+MainWindow -- The frame containing the Contact List. You use MainWindow to add new tabs, menu items, or force focus.
+ChatRoom -- The base abstract class of all chat rooms within Spark. Known implementations are ChatRoomImpl and GroupChatRoom.
+ChatArea -- The base chat viewer for both the TranscriptWindow and ChatInputEditor.
+ContactList -- The ContactList UI in Spark.
+ChatRoomButton -- The button that should be used to conform to the look and feel of other buttons within a ChatRoom.
+Structure of a Plugin
+Plugins are shipped as compressed JAR (Java Archive) files. The files in a plugin archive are as follows:
+
+Plugin Structure
+myplugin.jar!/
+ |- plugin.xml     <- Plugin definition file
+ |- libs/          <- Contains all the class archives needed to run this plugin.
+
+The plugin.xml file specifies the main Plugin class. A sample file might look like the following:
+
+Sample plugin.xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!-- Google Plugin Structure -->
+      <plugin>
+        <name>Google Desktop Plugin</name>
+        <class>com.examples.plugins.GooglePlugin</class>
+        <author>Derek DeMoro</author>
+        <version>1.0</version>
+        <description>Enables users to find files and emails relating to users using Google Desktop technology.</description>
+        <email>ddman@jivesoftware.com</email>
+        <minSparkVersion>2.0.6</minSparkVersion>
+      </plugin>
+Installing your Plugin
+You only need to drop your newly created jar file into the plugins directory of your Spark client install.
+
+Directory Structure
+Spark/
+ |- plugins/     <- Put your Sparkplug jar file here
+ |- lib/       <- The main classes and libraries needed to run your plugin.
+ |- resources/ <- Contains other supportive documents and libraries.
+ |- docs/ <- Help Manuals and the JavaDoc to help you develop your own plugins.
+Your plugin class must implement the Plugin interface from the Spark Client API. The Plugin interface has methods for initializing and shutting down the plugin.
+
+Getting Started Writing Sparkplugs
+In order to build your own Sparkplugs, you will need to setup your project properly to have all items in your classpath. With the Sparkplug.zip or Sparplug.tar.gz you have just extracted, you should see the following contents:
+
+Directory Structure
+Sparkplugs/
+ |- build/     <- Simple structure to allow you to easily build your plugins using ANT.
+ |- images/       <-  Images used in this guide.
+ |- plugin_development_guide.html/ <- The complete development guide (this document).
+ |- api/  <- Contains the Sparkplug Javadocs.
+ |- spark/ <- The spark build structure you will need for classpath purposes
+    |-bin    <- Contacts the startup.bat which starts up Spark for testing.
+    |-lib    <- Contains all the archives needed to run Spark.
+    |-logs   <- Where all logs are stored.
+    |-plugins <- Location where all plugins should be deployed to.
+    |-resources <- Contains native libraries for running OS specific operations.
+To setup a project to run Spark within your IDE, you will need to the following:
+
+It is required that you use the 1.4 JRE to build Spark.
+Add all *.jar files in the Sparkplugs/spark/lib and Sparkplugs/spark/lib/windows directories to your classpath.
+Add the resource directory (Sparkplugins/spark/resource) to your classpath for the native libraries.
+Main Class - org.jivesoftware.Spark
+VM Parameters - -Dplugin=path_to_your_plugin.xml file. This allows you to run your plugins within your IDE without deploying.
+That's it.
+We have also provided a build structure to easily build and deploy your own plugins directly into your Spark test bed. To use, read the file in the builder/ directory.
+
+Spark How-To's
+All code samples can be found in the examples.jar file located here.
+
+How do I create a simple plugin?
+How do I add my own Tab to the Spark Workspace?
+How do I add a context menu listener to the contact list?
+How do I add my own ContextMenu Listener to a ChatRoom?
+How do I add my own Menu to Spark?
+How do I add a button to a Chat Room?
+How do I add my own searching feature in Spark like the User Search or Google Search in Firefox?
+How can I intercept a File Transfer request?
+How can I send a file to another user?
+How can I control the UI and event handling of a ContactItem?
+How can I be notified when the Spark user changes their presence?
+How can I add a message filter?
+How can I create a person-to-person Chat Room?
+How can I create a public Conference room?
+How can I add my own Preferences?
+How can I flash the chat frame, like when a new message comes in?
+How do I create a simple plugin?
+Implement Plugin.
+Simple Plugin
+package org.jivesoftware.spark.examples;
+
+import org.jivesoftware.spark.plugin.Plugin;
+
+/**
+ * Implements the Spark Plugin framework to display the different possibilities using
+ * Spark.
+ */
+public class ExamplePlugin implements Plugin {
+
+    /**
+     * Called after Spark is loaded to initialize the new plugin.
+     */
+    public void initialize() {
+        System.out.println("Welcome To Spark");
+
+    }
+
+    /**
+     * Called when Spark is shutting down to allow for persistence of information
+     * or releasing of resources.
+     */
+    public void shutdown() {
+
+    }
+
+    /**
+     * Return true if the Spark can shutdown on users request.
+     * @return true if Spark can shutdown on users request.
+     */
+    public boolean canShutDown() {
+        return true;
+    }
+
+    /**
+    * Is called when a user explicitly asked to uninstall this plugin.
+    * The plugin owner is responsible to clean up any resources and
+    * remove any components install in Spark.
+    */
+    public void uninstall(){
+       // Remove all resources belonging to this plugin.
+    }
+}
+
+How to add your own Tab to the Spark Workspace?
+Implement Plugin.
+Retrieve the Workspace which is the UI for Spark.
+Retrieve the WorkspacePane which is the Tabbed Pane used by Spark.
+Add your own tab.
+Add a Tab to Spark
+public class ExamplePlugin implements Plugin {
+.
+.
+.
+    /**
+     * Adds a tab to Spark
+     */
+    private void addTabToSpark(){
+         // Get Workspace UI from SparkManager
+        Workspace workspace = SparkManager.getWorkspace();
+
+        // Retrieve the Tabbed Pane from the WorkspaceUI.
+        JTabbedPane tabbedPane = workspace.getWorkspacePane();
+
+        // Add own Tab.
+        tabbedPane.addTab("My Plugin", new JButton("Hello"));
+    }
+.
+.
+.
+}
+How do I add a context menu listener to the contact list?
+Implement Plugin.
+Retrieve the ContactList which is part of Spark's Workspace.
+Add ContactListListener.
+Add a ContextMenu Listener to ContactList
+  private void addContactListListener(){
+         // Get Workspace UI from SparkManager
+        Workspace workspace = SparkManager.getWorkspace();
+
+        // Retrieve the ContactList from the Workspace
+        ContactList contactList = workspace.getContactList();
+
+        // Create an action to add to the Context Menu
+        final Action sayHelloAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(SparkManager.getMainWindow(), "Welcome to Spark");
+            }
+        };
+
+        sayHelloAction.putValue(Action.NAME, "Say Hello To Me");
+
+
+        // Add own Tab.
+        contactList.addContextMenuListener(new ContextMenuListener() {
+            public void poppingUp(Object object, JPopupMenu popup) {
+                if(object instanceof ContactItem){
+                    popup.add(sayHelloAction);
+                }
+            }
+
+            public void poppingDown(JPopupMenu popup) {
+
+            }
+
+            public boolean handleDefaultAction(MouseEvent e) {
+                return false;
+            }
+        });
+    }
+How do I add my own ContextMenu Listener to a ChatRoom
+Implement Plugin.
+Add a ChatRoomListener to the ChatManager.
+Get either the TranscriptWindow or ChatInputEditor from the ChatRoom.
+Add a ContactMenuListener to the ChatArea.
+Add a ContextMenuListener to a ChatRoom, TranscriptWindow or ChatInputEditor
+    private void addContactListenerToChatRoom() {
+       // Retrieve a ChatManager from SparkManager
+        ChatManager chatManager = SparkManager.getChatManager();
+
+        final ContextMenuListener listener = new ContextMenuListener() {
+            public void poppingUp(Object object, JPopupMenu popup) {
+                final TranscriptWindow chatWindow = (TranscriptWindow)object;
+                Action clearAction = new AbstractAction() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        try {
+                            chatWindow.insert("My own text :)");
+                        }
+                        catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                clearAction.putValue(Action.NAME, "Insert my own text");
+                popup.add(clearAction);
+            }
+
+            public void poppingDown(JPopupMenu popup) {
+
+            }
+
+            public boolean handleDefaultAction(MouseEvent e) {
+                return false;
+            }
+        };
+
+        // Add a ChatRoomListener to the ChatManager to allow for notifications
+        // when a room is being opened. Note: I will use a ChatRoomListenerAdapter for brevity.
+        chatManager.addChatRoomListener(new ChatRoomListenerAdapter() {
+            public void chatRoomOpened(ChatRoom room) {
+                room.getTranscriptWindow().addContextMenuListener(listener);
+            }
+
+            public void chatRoomLeft(ChatRoom room) {
+                room.getTranscriptWindow().removeContextMenuListener(listener);
+            }
+        });
+    }
+How do I add my own Menu to Spark?
+Implement Plugin.
+Retrieve the MainWindow from SparkManager.
+Either create a new Menu or add a MenuItem to one of the pre-existing menus.
+Add a Menu To Spark
+    /**
+     * Adds a new menu and child menu item to Spark.
+     */
+    private void addMenuToSpark(){
+        // Retrieve the MainWindow UI from Spark.
+        final MainWindow mainWindow = SparkManager.getMainWindow();
+
+        // Create new Menu
+        JMenu myPluginMenu = new JMenu("My Plugin Menu");
+
+        // Create Action to test Menu install.
+        Action showMessage = new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                JOptionPane.showMessageDialog(mainWindow, "Yeah, It works.");
+            }
+        };
+
+        // Give the menu item a name.
+        showMessage.putValue(Action.NAME, "Check if it works");
+
+        // Add to Menu
+        myPluginMenu.add(showMessage);
+
+        // Add Menu To Spark
+        mainWindow.getJMenuBar().add(myPluginMenu);
+    }
+How do I add a button to a Chat Room?
+Implement Plugin.
+Add a ChatRoomListener to ChatManager.
+When the room is opened, add your ChatRoomButton to the ToolBar of the ChatRoom.
+Add a button to a Chat Room
+    /**
+     * Adds a button to each Chat Room that is opened.
+     */
+    private void addChatRoomButton(){
+        // Retrieve ChatManager from the SparkManager
+        ChatManager chatManager = SparkManager.getChatManager();
+
+        // Create a new ChatRoomButton.
+        final ChatRoomButton button = new ChatRoomButton("Push Me");
+
+
+        // Add to a new ChatRoom when the ChatRoom opens.
+        chatManager.addChatRoomListener(new ChatRoomListenerAdapter() {
+            public void chatRoomOpened(ChatRoom room) {
+                room.getToolBar().addChatRoomButton(button);
+            }
+
+            public void chatRoomLeft(ChatRoom room) {
+                room.getToolBar().removeChatRoomButton(button);
+            }
+        });
+    }
+How do I add my own searching feature in Spark like the User Search or Google Search in Firefox?
+Implement Plugin.
+Create a searchable object by implementing the Searchable interface.
+Add the Searchable implementation to the SearchManager.
+Add a search feature to Spark like User Search or Google Search in Firefox
+    /**
+     * Called after Spark is loaded to initialize the new plugin.
+     */
+    public void initialize() {
+        // Register new Searchable object "SearchMe" with the SearchManager.
+        SearchManager searchManager = SparkManager.getSearchManager();
+        searchManager.addSearchService(new SearchMe());
+    } 
+See the SearchMe code below.
+ 
+    
+package org.jivesoftware.spark.examples;
+
+import org.jivesoftware.spark.search.Searchable;
+import org.jivesoftware.spark.SparkManager;
+import org.jivesoftware.resource.LaRes;
+
+import javax.swing.Icon;
+import javax.swing.JOptionPane;
+
+/**
+ * A simple example of how to integrate ones own search into Spark.
+ */
+public class SearchMe implements Searchable {
+
+    /**
+     * The icon to show in the search box.
+     * @return the icon.
+     */
+    public Icon getIcon() {
+        return LaRes.getImageIcon(LaRes.SMALL_AGENT_IMAGE);
+    }
+
+    /**
+     * Returns the name of this search object that is displayed in the drop down box.
+     * @return the name.
+     */
+    public String getName() {
+        return "Searches Nothing Really";
+    }
+
+    /**
+     * Returns the text that should be displayed in grey when this searchable object
+     * is initially selected.
+     * @return the text.
+     */
+    public String getDefaultText() {
+        return "Click to search me.";
+    }
+
+    /**
+     * Returns the text to display in the tooltip.
+     * @return the tooltip text.
+     */
+    public String getToolTip() {
+        return "Shows an example of integrating ones own search into Spark.";
+    }
+
+    /**
+     * Is called when a user hits "Enter" key.
+     * @param query the query the user is searching for.
+     */
+    public void search(String query) {
+        JOptionPane.showMessageDialog(SparkManager.getMainWindow(), "Nothing Found :(");
+    }
+}
+How can I intercept a File Transfer request?
+Implement Plugin.
+Implement TransferListener.
+Register your TransferListener.
+Intercept File Transfer Requests
+    /**
+     * Listen for incoming transfer requests and either handle them yourself, or pass them
+     * off to be handled by the next listener. If no one handles it, then Spark will handle it.
+     */
+    private void addTransferListener(){
+
+        SparkTransferManager transferManager = SparkManager.getTransferManager();
+
+        transferManager.addTransferListener(new TransferListener() {
+            public boolean handleTransfer(FileTransferRequest request) {
+                // If I wanted to handle it, take the request, accept it and get the inputstream.
+                
+                // Otherwise, return false.
+                return false;
+            }
+        });
+    }
+How can I send a file to another user?
+Implement Plugin.
+Get the full jid of the user via the UserManager.
+Get the SparkTransferManager and send the file.
+Send a file to another user
+    /**
+     * Sends a file to a user in your ContactList.
+     */
+    private void sendFile(){
+        // Retrieve SparkTransferManager from the SparkManager.
+        SparkTransferManager transferManager = SparkManager.getTransferManager();
+
+        // In order to send a file to a person, you will need to know their full Jabber
+        // ID.
+
+        // Retrieve the Jabber ID for a user via the UserManager. This can
+        // return null if the user is not in the ContactList or is offline.
+        UserManager userManager = SparkManager.getUserManager();
+        String jid = userManager.getJIDFromNickname("Matt");
+        if(jid != null){
+            transferManager.sendFile(new File("MyFile.txt"), jid);
+        }
+    }
+How can I control the UI and event handling of a ContactItem?
+Implement Plugin.
+Get the ContactList.
+Get a ContactItem(s) based on a user's jid.
+Add your own ContactItemHandler to the ContactItem.
+Control the UI and event handling of a ContactItem
+    /**
+     * Controls the UI of a ContactItem.
+     */
+    private void handleUIAndEventsOfContactItem(){
+
+        ContactList contactList = SparkManager.getWorkspace().getContactList();
+
+        ContactItem item = contactList.getContactItemByJID("paul@jivesoftware.com/spark");
+
+        ContactItemHandler handler = new ContactItemHandler() {
+            /**
+             * Called when this users presence changes. You are responsible for changing the
+             * icon (or not) of this contact item.
+             * @param presence the users new presence.
+             */
+            public void handlePresence(Presence presence) {
+
+            }
+
+            /**
+             * Is called when a user double-clicks the item.
+             * @return true if you are handling the event.
+             */
+            public boolean handleDoubleClick() {
+                return false;
+            }
+        };
+
+        item.setHandler(handler);
+    }
+How can I be notified when the Spark user changes their presence?
+Implement Plugin.
+Get the SessionManager from SparkManager.
+Add your own PresenceListener to SessionManager.
+Receive notification when the Spark user changes their presence
+    /**
+     * Allows a plugin to be notified when the Spark users changes their
+     * presence.
+     */
+    private void addPersonalPresenceListener(){
+        SessionManager sessionManager = SparkManager.getSessionManager();
+
+        sessionManager.addPresenceListener(new PresenceListener() {
+
+            /**
+             * Spark user changed their presence.
+             * @param presence the new presence.
+             */
+            public void presenceChanged(Presence presence) {
+                
+            }
+        });
+    }
+How can I add a message filter?
+Implement Plugin.
+Get the ChatManager from SparkManager.
+Create an instance of Message Filter.
+Register with the ChatManager.
+Adding own Message Filter
+    /**
+     * Installs a new MessageFilter.
+     */
+    private void installMessageFilter() {
+        // Retrieve the ChatManager from SparkManager
+        ChatManager chatManager = SparkManager.getChatManager();
+
+        MessageFilter messageFilter = new MessageFilter() {
+            public void filter(Message message) {
+                String currentBody = message.getBody();
+                currentBody = currentBody.replaceAll("bad words", "good words");
+                message.setBody(currentBody);
+            }
+        };
+
+        chatManager.addMessageFilter(messageFilter);
+
+        // Just remember to remove your filter if need be.
+    }
+How can I create a person-to-person Chat Room
+Implement Plugin.
+Get the ChatManager from SparkManager.
+Create a new ChatRoom using the ChatManager.
+Optionally make it the active ChatRoom using the ChatContainer.
+Creating Person-to-Person Chat Room
+    /**
+     * Creates a person to person Chat Room and makes it the active chat.
+     */
+    private void createPersonToPersonChatRoom(){
+        
+        // Get the ChatManager from Sparkmanager
+        ChatManager chatManager = SparkManager.getChatManager();
+        
+        // Create the room.
+        ChatRoom chatRoom = chatManager.createChatRoom("don@jivesoftware.com", "Don The Man", "The Chat Title");
+        
+        // If you wish to make this the active chat room.
+        
+        // Get the ChatContainer (This is the container for all Chat Rooms)
+        ChatContainer chatContainer = chatManager.getChatContainer();
+        
+        // Ask the ChatContainer to make this chat the active chat.
+        chatContainer.activateChatRoom(chatRoom);
+    }
+How can I create a public Conference room?
+Implement Plugin.
+Get the ChatManager from SparkManager.
+Create a new conference ChatRoom using the ChatManager.
+Optionally make it the active ChatRoom using the ChatContainer.
+Creating a Conference Room
+    /**
+     * Creates a person to person Chat Room and makes it the active chat.
+     */
+    private void createConferenceRoom() {
+
+        // Get the ChatManager from Sparkmanager
+        ChatManager chatManager = SparkManager.getChatManager();
+
+        Collection serviceNames = null;
+
+        // Get the service name you wish to use.
+        try {
+            serviceNames = MultiUserChat.getServiceNames(SparkManager.getConnection());
+        }
+        catch (XMPPException e) {
+            e.printStackTrace();
+        }
+
+        // Create the room.
+        ChatRoom chatRoom = chatManager.createConferenceRoom("BusinessChat", (String)serviceNames.toArray()[0]);
+
+        // If you wish to make this the active chat room.
+
+        // Get the ChatContainer (This is the container for all Chat Rooms)
+        ChatContainer chatContainer = chatManager.getChatContainer();
+
+        // Ask the ChatContainer to make this chat the active chat.
+        chatContainer.activateChatRoom(chatRoom);
+    }
+}
+How can I add my own Preferences?
+Implement Plugin.
+Create a class that implements Preference.
+Create a UI to associate with the Preference.
+Register your new Preference with the PreferenceManager.
+Creating a Preference
+Create a class that implements Preference.
+/**
+ * $RCSfile: ,v $
+ * $Revision: $
+ * $Date:  $
+ *
+ * Copyright (C) 1999-2005 Jive Software. All rights reserved.
+ *
+ * This software is the proprietary information of Jive Software.
+ * Use is subject to license terms.
+ */
+package org.jivesoftware.spark.examples.preferences;
+
+import org.jivesoftware.spark.preference.Preference;
+import org.jivesoftware.resource.LaRes;
+
+import javax.swing.Icon;
+import javax.swing.JComponent;
+
+public class MyPreferences implements Preference {
+
+    private MyPreferenceUI ui;
+
+    public MyPreferences(){
+        ui = new MyPreferenceUI();
+    }
+
+
+    public String getTitle() {
+        return "Example Preferences";
+    }
+
+    public Icon getIcon() {
+        return LaRes.getImageIcon(LaRes.ADD_IMAGE_24x24);
+    }
+
+    public String getTooltip() {
+        return "Example tooltip in preference dialog";
+    }
+
+    public String getListName() {
+        return "Examples";
+    }
+
+    public String getNamespace() {
+        return "EXAMPLE";
+    }
+
+    public JComponent getGUI() {
+        return ui;
+    }
+
+    public void load() {
+        // Would load persisted information from file or server and
+        // set the UI appropriately.
+        ui.setShowChatHistory(true);
+    }
+
+    public void commit() {
+        // Would persist the current state of the preferences.
+        boolean showChatHistory = ui.isChatHistoryShown();
+
+    }
+
+    public boolean isDataValid() {
+        return true;
+    }
+
+    public String getErrorMessage() {
+        return null;
+    }
+
+    public Object getData() {
+        return null;
+    }
+
+    public void shutdown() {
+        // Do nothing.
+    }
+}
+
+Create a UI class that your Preference will use.
+package org.jivesoftware.spark.examples.preferences;
+
+import org.jivesoftware.spark.util.ResourceUtils;
+
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+
+import java.awt.FlowLayout;
+
+/**
+ * Demonstrates a simple panel used to display a UI that can be used as
+ * the Preference UI in the Preferences Dialog. This panel shows a simple
+ * UI with accessors for setting the preference values / persistence.
+ */
+public class MyPreferenceUI extends JPanel {
+
+    private JCheckBox showChatHistory;
+
+    /**
+     * Creates the default panel using FlowLayout as the Layout. But
+     * GridBagLayout is the really only true layout :)
+     */
+    public MyPreferenceUI() {
+        setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        buildUI();
+    }
+
+    private void buildUI() {
+        showChatHistory = new JCheckBox();
+
+        // Use Mnemonics for the CheckBox using ResourceUtils.
+        ResourceUtils.resButton(showChatHistory, "&Show Chat History in Chat Window");
+
+        // Add Button
+        add(showChatHistory);
+    }
+
+    /**
+     * Sets the UI based on previous preferences.
+     * @param show true if Chat History to show up.
+     */
+    public void setShowChatHistory(boolean show){
+        showChatHistory.setSelected(show);
+    }
+
+    /**
+     * Returns true if Chat History should be shown.
+     * @return true if history shown.
+     */
+    public boolean isChatHistoryShown(){
+        return showChatHistory.isSelected();
+    }
+
+
+}
+
+Register Preference class with Preference Manager.
+  public void addPreference(){
+     PreferenceManager preferenceManager = SparkManager.getPreferenceManager();
+     preferenceManager.addPreference(new MyPreferences());
+  }
+How to show an alert, like when a new message comes in?
+How to show an alert, like when a new message comes in?
+    // Get the ChatContainer from the ChatManager.
+    
+     ChatContainer chatContainer = ChatManager.getChatContainer();
+     
+     // Get the room you wish to be notified.
+     ChatRoom chatRoom = chatContainer.getActiveChatRoom();
+     chatContainer.startFlashing(chatRoom);

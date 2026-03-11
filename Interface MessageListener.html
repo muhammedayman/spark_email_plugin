@@ -1,0 +1,47 @@
+
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD
+org.jivesoftware.spark.ui
+Interface MessageListener
+All Known Implementing Classes:
+ChatContainer, SoundPlugin
+public interface MessageListener
+The MessageListener interface is one of the interfaces extension writers use to add functionality to Spark.
+
+In general, you implement this interface in order to listen for incoming or outgoing messages to particular ChatRooms and to be notified about the message itself.
+
+
+
+
+Method Summary
+ void	messageReceived(ChatRoom room, org.jivesoftware.smack.packet.Message message)
+          Invoked by the ChatRoom when it is receives a new message.
+ void	messageSent(ChatRoom room, org.jivesoftware.smack.packet.Message message)
+          Invoked by the ChatRoom when a new message has been sent.
+ 
+
+Method Detail
+messageReceived
+void messageReceived(ChatRoom room,
+                     org.jivesoftware.smack.packet.Message message)
+Invoked by the ChatRoom when it is receives a new message.
+
+Parameters:
+room - the ChatRoom the message was sent to.
+message - the message received.
+See Also:
+ChatRoom
+messageSent
+void messageSent(ChatRoom room,
+                 org.jivesoftware.smack.packet.Message message)
+Invoked by the ChatRoom when a new message has been sent.
+
+Parameters:
+room - the ChatRoom that sent the message.
+message - the message sent.
+See Also:
+ChatRoom
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD

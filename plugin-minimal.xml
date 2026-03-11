@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <name>Email Integration</name>
+    <class>org.jivesoftware.spark.plugin.email.EmailPlugin</class>
+    <author>Spark Developer</author>
+    <version>1.0.0</version>
+    <homePage>http://www.example.com</homePage>
+    <description>Forwards chat messages to email with status tracking</description>
+    <email>dev@example.com</email>
+    <minSparkVersion>2.5.0</minSparkVersion>
+    <os>Windows,Linux,Mac</os>
+    <java>1.8.0</java>
+</plugin>

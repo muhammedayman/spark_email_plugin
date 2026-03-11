@@ -1,0 +1,193 @@
+
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD
+org.jivesoftware.spark
+Class SessionManager
+java.lang.Object
+  extended by org.jivesoftware.spark.SessionManager
+All Implemented Interfaces:
+org.jivesoftware.smack.ConnectionListener
+public final class SessionManager
+extends java.lang.Object
+implements org.jivesoftware.smack.ConnectionListener
+This manager is responsible for the handling of the XMPPConnection used within Spark. This is used for the changing of the users presence, the handling of connection errors and the ability to add presence listeners and retrieve the connection used in Spark.
+
+
+
+Author:
+Derek DeMoro
+
+Constructor Summary
+SessionManager()
+           
+ 
+Method Summary
+ void	addPresenceListener(PresenceListener listener)
+          Adds a PresenceListener to Spark.
+ void	changePresence(org.jivesoftware.smack.packet.Presence presence)
+          Update the current availability of the user
+ void	connectionClosed()
+          Notify agent that the connection has been closed.
+ void	connectionClosedOnError(java.lang.Exception ex)
+          Notify agent the connection was closed due to an exception.
+ java.lang.String	getBareAddress()
+          Returns the users bare address.
+ org.jivesoftware.smack.XMPPConnection	getConnection()
+          Returns the XMPPConnection used for this session.
+ org.jivesoftware.smackx.packet.DiscoverItems	getDiscoveredItems()
+          Returns the Discovered Items.
+ java.lang.String	getJID()
+          Returns the jid of the Spark user.
+ java.lang.String	getPassword()
+          Return the password associated with this session.
+ org.jivesoftware.smackx.PrivateDataManager	getPersonalDataManager()
+          Returns the PrivateDataManager responsible for handling all private data for individual agents.
+ java.lang.String	getServerAddress()
+          Returns the host for this connection.
+ java.lang.String	getUsername()
+          Return the username associated with this session.
+ void	initializeSession(org.jivesoftware.smack.XMPPConnection connection, java.lang.String username, java.lang.String password)
+          Initializes session.
+ void	reconnectingIn(int i)
+           
+ void	reconnectionFailed(java.lang.Exception exception)
+           
+ void	reconnectionSuccessful()
+           
+ void	removePresenceListener(PresenceListener listener)
+          Remove a PresenceListener from Spark.
+ void	setConnection(org.jivesoftware.smack.XMPPConnection con)
+           
+ void	setJID(java.lang.String jid)
+          Sets the jid of the current Spark user.
+ void	setServerAddress(java.lang.String address)
+          Set the server address
+ 
+Methods inherited from class java.lang.Object
+clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait
+ 
+
+Constructor Detail
+SessionManager
+public SessionManager()
+Method Detail
+initializeSession
+public void initializeSession(org.jivesoftware.smack.XMPPConnection connection,
+                              java.lang.String username,
+                              java.lang.String password)
+Initializes session.
+
+Parameters:
+connection - the XMPPConnection used in this session.
+username - the agents username.
+password - the agents password.
+getConnection
+public org.jivesoftware.smack.XMPPConnection getConnection()
+Returns the XMPPConnection used for this session.
+
+Returns:
+the XMPPConnection used for this session.
+getPersonalDataManager
+public org.jivesoftware.smackx.PrivateDataManager getPersonalDataManager()
+Returns the PrivateDataManager responsible for handling all private data for individual agents.
+
+Returns:
+the PrivateDataManager responsible for handling all private data for individual agents.
+getServerAddress
+public java.lang.String getServerAddress()
+Returns the host for this connection.
+
+Returns:
+the connection host.
+setServerAddress
+public void setServerAddress(java.lang.String address)
+Set the server address
+
+Parameters:
+address - the address of the server.
+connectionClosedOnError
+public void connectionClosedOnError(java.lang.Exception ex)
+Notify agent the connection was closed due to an exception.
+
+Specified by:
+connectionClosedOnError in interface org.jivesoftware.smack.ConnectionListener
+Parameters:
+ex - the Exception that took place.
+connectionClosed
+public void connectionClosed()
+Notify agent that the connection has been closed.
+
+Specified by:
+connectionClosed in interface org.jivesoftware.smack.ConnectionListener
+getUsername
+public java.lang.String getUsername()
+Return the username associated with this session.
+
+Returns:
+the username associated with this session.
+getPassword
+public java.lang.String getPassword()
+Return the password associated with this session.
+
+Returns:
+the password assoicated with this session.
+changePresence
+public void changePresence(org.jivesoftware.smack.packet.Presence presence)
+Update the current availability of the user
+
+Parameters:
+presence - the current presence of the user.
+getJID
+public java.lang.String getJID()
+Returns the jid of the Spark user.
+
+Returns:
+the jid of the Spark user.
+setJID
+public void setJID(java.lang.String jid)
+Sets the jid of the current Spark user.
+
+Parameters:
+jid - the jid of the current Spark user.
+addPresenceListener
+public void addPresenceListener(PresenceListener listener)
+Adds a PresenceListener to Spark. PresenceListener's are used to allow notification of when the Spark users changes their presence.
+
+Parameters:
+listener - the listener.
+removePresenceListener
+public void removePresenceListener(PresenceListener listener)
+Remove a PresenceListener from Spark.
+
+Parameters:
+listener - the listener.
+getBareAddress
+public java.lang.String getBareAddress()
+Returns the users bare address. A bare-address is the address without a resource (ex. derek@jivesoftware.com/spark would be derek@jivesoftware.com)
+
+Returns:
+the users bare address.
+getDiscoveredItems
+public org.jivesoftware.smackx.packet.DiscoverItems getDiscoveredItems()
+Returns the Discovered Items.
+
+Returns:
+the discovered items found on startup.
+setConnection
+public void setConnection(org.jivesoftware.smack.XMPPConnection con)
+reconnectingIn
+public void reconnectingIn(int i)
+Specified by:
+reconnectingIn in interface org.jivesoftware.smack.ConnectionListener
+reconnectionSuccessful
+public void reconnectionSuccessful()
+Specified by:
+reconnectionSuccessful in interface org.jivesoftware.smack.ConnectionListener
+reconnectionFailed
+public void reconnectionFailed(java.lang.Exception exception)
+Specified by:
+reconnectionFailed in interface org.jivesoftware.smack.ConnectionListener
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD

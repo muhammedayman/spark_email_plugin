@@ -1,0 +1,219 @@
+
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD
+org.jivesoftware.spark
+Class SparkManager
+java.lang.Object
+  extended by org.jivesoftware.spark.SparkManager
+public final class SparkManager
+extends java.lang.Object
+Used as the System Manager for the Spark IM client. The SparkManager is responsible for the loading of other system managers on an as needed basis to prevent too much upfront loading of resources. Some of the Managers and components you can access from here are:
+
+
+
+
+Managers
+ChatManager - Used for adding, removing and appending listeners to Chat Rooms.
+PreferenceManager - Used for adding and removing Preferences.
+SoundManager - Used for playing sounds within Spark.
+SearchManager - Used for adding own search objects to Spark.
+SparkTransferManager - Used for all file transfer operations within Spark.
+ChatAssistantManager - Used to add ChatRoom plugins. ChatRoomPlugins are installed in their own pane on the right side of the ChatRoom.
+VCardManager - Handles all profile handling within Spark. Use this to retrieve profile information on users.
+Windows and Components
+
+MainWindow - The frame containing the Spark client. Use for updating menus, and referencing parent frames.
+Workspace - The inner pane of the Spark client. Use for adding or removing tabs to the main Spark panel.
+Notifications - Use to display tray icon notifications (system specific), such as toaster popups or changing the icon of the system tray.
+
+
+Version:
+1.0, 03/12/14
+Author:
+Derek DeMoro
+
+Field Summary
+static java.text.SimpleDateFormat	DATE_SECOND_FORMATTER
+          The Date Formatter to use in Spark.
+ 
+Method Summary
+static AlertManager	getAlertManager()
+          Returns the AlertManager.
+static ChatManager	getChatManager()
+          Returns the ChatManager.
+static java.lang.String	getClipboard()
+          Returns the String in the system clipboard.
+static org.jivesoftware.smack.XMPPConnection	getConnection()
+          Gets the XMPPConnection instance.
+static java.awt.Component	getFocusedComponent()
+          Return the component in focus at any particular instance.
+static MainWindow	getMainWindow()
+          Gets the MainWindow instance.
+static org.jivesoftware.smackx.MessageEventManager	getMessageEventManager()
+          Returns the MessageEventManager used in Spark.
+static Notifications	getNotificationsEngine()
+          Returns the Notification System to handle general notification in either the system tray or "toaster" popups.
+static PreferenceManager	getPreferenceManager()
+          Gets the PreferenceManager instance.
+static SearchManager	getSearchManager()
+          Returns the SearchManager.
+static SessionManager	getSessionManager()
+          Gets the SessionManager instance.
+static SoundManager	getSoundManager()
+          Gets the SoundManager instance.
+static SparkTransferManager	getTransferManager()
+          Returns the SparkTransferManager.
+static java.io.File	getUserDirectory()
+          Returns the User Directory to used by individual users.
+static UserManager	getUserManager()
+          Returns the UserManager for LiveAssistant.
+static VCardManager	getVCardManager()
+          Returns the VCardManager.
+static Workspace	getWorkspace()
+          Retrieves the inner container for Spark.
+static void	printChatRoomTranscript(ChatRoom room)
+          Prints the transcript of a given chat room.
+static void	printChatTranscript(TranscriptWindow transcriptWindow)
+          Displays a print dialog to print the transcript found in a TranscriptWindow
+static void	setClipboard(java.lang.String str)
+          Adds a string to the system clipboard.
+ 
+Methods inherited from class java.lang.Object
+clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait
+ 
+
+Field Detail
+DATE_SECOND_FORMATTER
+public static final java.text.SimpleDateFormat DATE_SECOND_FORMATTER
+The Date Formatter to use in Spark.
+
+Method Detail
+getMainWindow
+public static MainWindow getMainWindow()
+Gets the MainWindow instance. The MainWindow is the frame container used to hold the Workspace container and Menubar of the Spark Client.
+
+Returns:
+MainWindow instance.
+getSessionManager
+public static SessionManager getSessionManager()
+Gets the SessionManager instance.
+
+Returns:
+the SessionManager instance.
+getSoundManager
+public static SoundManager getSoundManager()
+Gets the SoundManager instance.
+
+Returns:
+the SoundManager instance
+getPreferenceManager
+public static PreferenceManager getPreferenceManager()
+Gets the PreferenceManager instance.
+
+Returns:
+the PreferenceManager instance.
+getConnection
+public static org.jivesoftware.smack.XMPPConnection getConnection()
+Gets the XMPPConnection instance.
+
+Returns:
+the XMPPConnection associated with this session.
+getUserManager
+public static UserManager getUserManager()
+Returns the UserManager for LiveAssistant. The UserManager keeps track of all users in current chats.
+
+Returns:
+the UserManager for LiveAssistant.
+getChatManager
+public static ChatManager getChatManager()
+Returns the ChatManager. The ChatManager is responsible for creation and removal of chat rooms, transcripts, and transfers and room invitations.
+
+Returns:
+the ChatManager for this instance.
+getWorkspace
+public static Workspace getWorkspace()
+Retrieves the inner container for Spark. The Workspace is the container for all plugins into the Spark install. Plugins would use this for the following:
+
+Add own tab to the main tabbed pane. ex.
+
+Workspace workspace = SparkManager.getWorkspace(); JButton button = new JButton("HELLO SPARK USERS"); workspace.getWorkspacePane().addTab("MyPlugin", button);
+
+
+Retrieve the ContactList.
+
+getNotificationsEngine
+public static Notifications getNotificationsEngine()
+Returns the Notification System to handle general notification in either the system tray or "toaster" popups. You could use the notification engine to alert users to incoming messages, new emails, or forum posts.
+
+Returns:
+the Notification system.
+getMessageEventManager
+public static org.jivesoftware.smackx.MessageEventManager getMessageEventManager()
+Returns the MessageEventManager used in Spark. The MessageEventManager is responsible for XMPP specific operations such as notifying users that you have received their message or inform a users that you are typing a message to them.
+
+Returns:
+the MessageEventManager used in Spark.
+getVCardManager
+public static VCardManager getVCardManager()
+Returns the VCardManager. The VCardManager is responsible for handling all users profiles and updates to their profiles. Use the VCardManager to access a users profile based on their Jabber User ID (JID).
+
+Returns:
+the VCardManager.
+getAlertManager
+public static AlertManager getAlertManager()
+Returns the AlertManager. The AlertManager allows for flashing of Windows within Spark.
+
+Returns:
+the AlertManager.
+printChatRoomTranscript
+public static void printChatRoomTranscript(ChatRoom room)
+Prints the transcript of a given chat room.
+
+Parameters:
+room - the chat room that contains the transcript to print.
+getClipboard
+public static java.lang.String getClipboard()
+Returns the String in the system clipboard. If not string is found, null will be returned.
+
+Returns:
+the contents of the system clipboard. If none found, null is returned.
+setClipboard
+public static void setClipboard(java.lang.String str)
+Adds a string to the system clipboard.
+
+Parameters:
+str - the string to add the clipboard.
+printChatTranscript
+public static void printChatTranscript(TranscriptWindow transcriptWindow)
+Displays a print dialog to print the transcript found in a TranscriptWindow
+
+Parameters:
+transcriptWindow - the TranscriptWindow containing the transcript.
+getTransferManager
+public static SparkTransferManager getTransferManager()
+Returns the SparkTransferManager. This is used for any transfer operations within Spark. You may use the manager to intercept file transfers for filtering of transfers or own plugin operations with the File Transfer object.
+
+Returns:
+the SpartTransferManager.
+getSearchManager
+public static SearchManager getSearchManager()
+Returns the SearchManager. This is used to allow plugins to register their own search service.
+
+Returns:
+the SearchManager.
+getUserDirectory
+public static java.io.File getUserDirectory()
+Returns the User Directory to used by individual users. This allows for Multi-User Support.
+
+Returns:
+the UserDirectory for Spark.
+getFocusedComponent
+public static java.awt.Component getFocusedComponent()
+Return the component in focus at any particular instance.
+
+Returns:
+the focused component
+Overview 	Package 	 Class 	Use 	Tree 	Deprecated 	Index 	Help 
+ PREV CLASS   NEXT CLASS	FRAMES    NO FRAMES    All Classes
+SUMMARY: NESTED | FIELD | CONSTR | METHOD	DETAIL: FIELD | CONSTR | METHOD
