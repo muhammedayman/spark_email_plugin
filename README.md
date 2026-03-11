@@ -2,6 +2,13 @@
 
 A plugin for Spark IM client that forwards incoming chat messages to a configured email address with real-time status tracking.
 
+## Quick Start
+
+1. Download `spark-email-plugin.zip` from the `distribution` folder
+2. Extract and run the installer for your OS
+3. Restart Spark
+4. Configure in File → Preferences → Email Integration
+
 ## Features
 
 - **Email Configuration**: Configure SMTP server, username, password, and recipient email
@@ -12,6 +19,28 @@ A plugin for Spark IM client that forwards incoming chat messages to a configure
 
 ## Installation
 
+### Option 1: Download Pre-built Plugin (Recommended)
+
+1. **Download the Plugin**:
+   - Download `spark-email-plugin.zip` from the `distribution` folder
+   - Extract the ZIP file
+
+2. **Install Using Script**:
+   - **Windows**: Run `install-windows.bat`
+   - **Linux/Mac**: Run `install-linux-mac.sh`
+   
+   OR
+
+3. **Manual Installation**:
+   - Close Spark completely
+   - Copy the `email` folder to your Spark plugins directory:
+     - Windows: `%APPDATA%\Spark\plugins\`
+     - Linux: `~/.Spark/plugins/`
+     - Mac: `~/Library/Application Support/Spark/plugins/`
+   - Restart Spark
+
+### Option 2: Build from Source
+
 1. **Build the Plugin**:
    ```bash
    mvn clean package
@@ -19,11 +48,12 @@ A plugin for Spark IM client that forwards incoming chat messages to a configure
    This will create `email-plugin-1.0.0-jar-with-dependencies.jar` in the `target` directory.
 
 2. **Install in Spark**:
-   - Copy the JAR file to Spark's plugins directory:
-     - Windows: `%APPDATA%\Spark\plugins\`
-     - Linux: `~/.Spark/plugins/`
-     - Mac: `~/Library/Application Support/Spark/plugins/`
-   - Copy `plugin.xml` to the same directory
+   - Use the `rebuild-and-distribute.bat` script (builds and installs automatically)
+   
+   OR manually:
+   - Create folder structure: `%APPDATA%\Spark\plugins\email\lib\`
+   - Copy `plugin.xml` to `email` folder
+   - Copy the JAR file to `email\lib\` and rename it to `plugin-classes.jar`
    - Restart Spark
 
 ## Configuration
